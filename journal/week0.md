@@ -51,4 +51,5 @@ Notes:
 Completed watching Ashish's Week 0 - Security Considerations (AWS Organizations & AWS IAM Tutorial For Beginners)
 https://www.youtube.com/watch?v=4EMWBYVggQI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=15
 
-
+Notes: 
+    
