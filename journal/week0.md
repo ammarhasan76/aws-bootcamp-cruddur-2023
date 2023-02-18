@@ -99,6 +99,9 @@ https://www.youtube.com/watch?v=OdUnNuKylHg&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgN
 Create Budget - done
 Crete Billing Alarm - done
 
-Conceptual DiagraM in Lucid:
+Conceptual Diagram in Lucid:
 https://lucid.app/lucidchart/20d108d1-45e4-46ad-9901-8e1459b7a6d3/edit?view_items=ymoyv3JbMZdO&invitationId=inv_811b50f0-1bc4-4fc6-89f2-b67af0440a82
+
+Logical Diagram in Lucid:
+https://lucid.app/lucidchart/0e4b25fd-2a35-41b3-8992-3d6361ad2211/edit?viewport_loc=-125%2C-19%2C2692%2C1535%2C0_0&invitationId=inv_d783aad2-ec12-405a-a3d3-811c24b5e7d3
 
