@@ -93,3 +93,10 @@ Study Notes:
     Principle of Least Privilege
 
     Create IAM role
+
+Completed Watching Andrew's Follow-Up Video (Generate Credentials, AWS CLI, Budget and Billing Alarm via CLI)
+https://www.youtube.com/watch?v=OdUnNuKylHg&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=15
+Create Budget - done
+Crete Billing Alarm - done
+
+
