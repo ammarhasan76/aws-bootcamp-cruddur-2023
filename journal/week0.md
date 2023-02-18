@@ -63,5 +63,33 @@ Study Notes:
     Can double check byu going to main profile -> secruity credentials and review root user config
 
     Create an OU
-    
+    Root user account is the management account, recommended it should not have any applications, only used to create ORG / OU
+    Example OU strategy = different business units or different environments (eng,dev,uat,prd etc)
+    Example account strategy = Active Account OU + Standby Account OU (accounts can take time to create so can cerate in advance in Standby and move into Active as needed)
 
+    CloudTrail
+        Moniotor data security and residence
+        Region vs AZ vs Global
+        Audit Logs for IR/Forensice
+    Create CloudTrail logs - done
+
+    IAM Users
+    Create IAM User
+    3 kinds of users in AWS - IAM user, system user, federated user
+    Enable MFA for all human users
+    Principle of Least Privilege
+    
+    Delete access keys for Root User account - done
+    Create IAM user - done
+    Enable MFA on newly create IAM user - done
+
+    IAM Roles
+    2 types off IAM roles & IAM policies - AWS managed vs custom
+
+    IAM roles vs IAM policies 
+    Role = An IAM role is an identity you can create that has specific permissions with credentials that are valid for short durations. Roles can be assumed by entities that you trust.
+    Policy = a group of permissions (ie a role can have inidividual perms assigned but better to use a policy to group up those perms)
+
+    Principle of Least Privilege
+
+    Create IAM role
