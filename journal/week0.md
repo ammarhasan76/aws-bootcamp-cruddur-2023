@@ -12,7 +12,7 @@ https://www.youtube.com/watch?v=SG8blanhAOg&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgN
 16/FEB/2023 
 Completed watching Chirag's Week 0 - Spend Considerations (Pricing Basics & Free Tier)
 https://www.youtube.com/watch?v=OVw3RrlP-sI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=13
-Notes:
+Study Notes:
 
     AWS Bill Walkthrough
         Root user or IAM user with billing perms
@@ -50,6 +50,18 @@ Notes:
 18/FEB/2023
 Completed watching Ashish's Week 0 - Security Considerations (AWS Organizations & AWS IAM Tutorial For Beginners)
 https://www.youtube.com/watch?v=4EMWBYVggQI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=15
+Study Notes: 
+    Cyber Security = Technology risk the business may be exposed to
+    Cloud Security = protect data, apps, services in your Cloud envrionments from internal and external security threats
+    1. Reduce impact of breach
+    2. Protect networks, apps, services from data theft
+    3. Reduce human error
+    Cloud/Cloud security - takes practice due to complexity, new services, threat actors improving capability
 
-Notes: 
+    Enable MFA for root account - already done!
+    MFA important as compromised domain admin account = game over
+    Can double check byu going to main profile -> secruity credentials and review root user config
+
+    Create an OU
     
+
