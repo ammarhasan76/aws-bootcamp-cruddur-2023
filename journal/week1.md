@@ -20,4 +20,10 @@ Study Notes:
     No need to repeat items from the checklist
     Create Sections to help readability
 
+Completed watching: Remember to Commit Your Code (Week 1- After Stream - Commit Your Code)
+https://www.youtube.com/watch?v=b-idMgFFcpg&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=24
+Study Notes:
+    Don't forget to commit your changes!
+    If you do forget and you are using GitPod - reopen the Workspace you were using and you should be able to commit the code
+
 
