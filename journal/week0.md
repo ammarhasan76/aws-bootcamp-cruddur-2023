@@ -105,3 +105,8 @@ https://lucid.app/lucidchart/20d108d1-45e4-46ad-9901-8e1459b7a6d3/edit?view_item
 Logical Diagram in Lucid:
 https://lucid.app/lucidchart/0e4b25fd-2a35-41b3-8992-3d6361ad2211/edit?viewport_loc=-125%2C-19%2C2692%2C1535%2C0_0&invitationId=inv_d783aad2-ec12-405a-a3d3-811c24b5e7d3
 
+23/02/2023
+#To-Do
+Setup Amazon EventBridge to get Health Dashboard events sent to SNS to email me when there is a service health issue
+Connect AWS access keys to VSCode for CLI commands (already setup AWS CLI in GitPod)
+Open support ticket to increae limit of elastic IP
