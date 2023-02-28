@@ -48,6 +48,16 @@ Study Notes:
 
     Dockers layers = union filesystem
 
-    **What is a docker "volume"
+    **What is a docker "volume" = volume local to the running container
+     
+#Note
+Got Codespaces up and running with config that matches GitPod Workspace
+Interesting to note that when choosing to launch to local VSCode instance the extensions I defined get installed, I don't think I saw that with GitPod when launching VSCode locally (the terminal was still going to GitPod hosted container)
 
-    
+#TASKS
+- Containerize Application (Dockerfiles, Docker Compose)
+- Document the Notification Endpoint for the OpenAI Document
+- Write a Flask Backend Endpoint for Notifications
+- Write a React Page for Notifications
+- Run DynamoDB Local Container and ensure it works
+- Run Postgres Container and ensure it works
