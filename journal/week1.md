@@ -27,3 +27,27 @@ Study Notes:
     If you do forget and you are using GitPod - reopen the Workspace you were using and you should be able to commit the code
 
 
+Watching: Week 1 - Live Streamed Video (Week 1 - App Containerization)
+https://www.youtube.com/watch?v=zJnNe5Nv4tE&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=23
+Study Notes:
+    Why Containerise the application
+        Makes application portable
+        Avoid envionrment configuration repition work
+        Consistent environment between developers
+        Consistent environment between dev -> uat -> prd
+        
+    Recommended	by @jamesspurin: linuxserver.io
+    Docker Hub = Container Registry hosted by Docker co.
+    OCI = Open Container Initiative, Docker Hub meets OCI standard
+
+    Action: confirmed I have dockerhub account
+    Action: checked for extension, but Gitpod did not have the VSCode extension for Docker installed
+    Action: installed VSCode Docker extension for local install and gitpod workspace
+
+    Docker image "scratch" = official base image
+
+    Dockers layers = union filesystem
+
+    **What is a docker "volume"
+
+    
