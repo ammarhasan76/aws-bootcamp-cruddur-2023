@@ -9,7 +9,8 @@
 		"extensions": [
 			"eamodio.gitlens",
 			"ms-azuretools.vscode-docker",
-			"amazonwebservices.aws-toolkit-vscode"
+			"amazonwebservices.aws-toolkit-vscode",
+			"ms-vscode-remote.remote-containers"
 		]
 	}
 }
