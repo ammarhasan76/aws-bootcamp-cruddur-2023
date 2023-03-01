@@ -77,9 +77,54 @@ https://vscode.github.com/
 
 01/MAR/2023
 Watching: Week 1 - Live Streamed Video (Week 1 - App Containerization)
-https://www.youtube.com/watch?v=zJnNe5Nv4tE&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=23 (00h:45m to 02h:00m)
+https://www.youtube.com/watch?v=zJnNe5Nv4tE&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=23 (00h:45m to 01h:40m)
 Study Notes:
+Action: pip3 install -r requirements.txt
+(this was executed in dev env)
 
+note: need to this in gitpod to stay in sync
+
+web server is running but 404'ing due to frontend_url and backend_url env var not being configured
+the proper URL is /api/activities/home
+
+Action: (locally)
+export FRONTEND_URL="*"
+export BACKEND_URL="*"
+python3 -m flask run --host=0.0.0.0 --port=4567
+(make sure the port is unlocked/public)
+
+RUN = cmd creating a layer in the image
+CMD = cmd executed once the container is running
+
+unset FRONTEND_URL
+unset BACKEND_URL
+env | grep FRONTEND_URL
+env | grep BACKEND_URL
+
+Action: (locally - starting from home dir)
+docker build -t backend-flask ./backend-flask
+
+-t is tagging the container (name:tag so backend-flask:latest by default)
+./ from home/subdirectory
+
+Action: (run the container)
+docker run --rm -p 4567:4567 -it backend-flask
+
+Problem due to missingg ENV VARS
+
+Action: (lets looks inside the container to see if ENV VARS are set)
+1. docker exec -it <container_ID> /bin/bash
+2. attach shell using the Docker extension
+ENV (and you can see the two URL vars are not set)
+
+Solution
+1. Add the ENV VARS in the Dockerfile
+2. Pass the ENV VARS to the docker 
+if the ENV VARS are already set locally, you don't even need to explicitly pass the full VAR to the docker run command, so;
+docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
+is the same as
+docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend-flask
+single-quote the var value due to shell interpretation of what is in " "
 
 
 
