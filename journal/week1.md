@@ -75,6 +75,10 @@ Interesting references whilst researching:
 https://code.visualstudio.com/docs/sourcecontrol/github
 https://vscode.github.com/
 
+============================
+***Containerise BackEnd***
+============================
+
 01/MAR/2023
 Watching: Week 1 - Live Streamed Video (Week 1 - App Containerization)
 https://www.youtube.com/watch?v=zJnNe5Nv4tE&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=23 (00h:45m to 01h:40m)
@@ -88,11 +92,13 @@ web server is running but 404'ing due to frontend_url and backend_url env var no
 the proper URL is /api/activities/home
 
 Action: (locally)
+cd backend-flask
 export FRONTEND_URL="*"
 export BACKEND_URL="*"
 python3 -m flask run --host=0.0.0.0 --port=4567
-(make sure the port is unlocked/public)
+(make sure the port is unlocked/public, got to port take in vscode, open link and apped /api/activities/home to check all okay)
 
+In Dockerfile:
 RUN = cmd creating a layer in the image
 CMD = cmd executed once the container is running
 
@@ -110,12 +116,12 @@ docker build -t backend-flask ./backend-flask
 Action: (run the container)
 docker run --rm -p 4567:4567 -it backend-flask
 
-Problem due to missingg ENV VARS
+Problem due to missing ENV VARS
 
 Action: (lets looks inside the container to see if ENV VARS are set)
-1. docker exec -it <container_ID> /bin/bash
+1. docker exec -it ${CONTAINER_ID} /bin/bash
 2. attach shell using the Docker extension
-ENV (and you can see the two URL vars are not set)
+(run the env command and you can see the two URL vars are not set)
 
 Solution
 1. Add the ENV VARS in the Dockerfile
@@ -126,10 +132,62 @@ is the same as
 docker run --rm -p 4567:4567 -it -e FRONTEND_URL -e BACKEND_URL backend-flask
 single-quote the var value due to shell interpretation of what is in " "
 
+02/MAR/2023
+Watching: Week 1 - Live Streamed Video (Week 1 - App Containerization)
+https://www.youtube.com/watch?v=zJnNe5Nv4tE&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=23 (01h:40m to 02h:00m)
+Study Notes:
 
+Action: (run container in background, ie returns the container ID and then gives back the command prompt)
+docker container run --rm -p 4567:4567 -d -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
+
+Action: (alternative, also assign the containerid to an env var)
+CONTAINER_ID=$(docker run --rm -p 4567:4567 -d -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
+echo ${CONTAINER_ID}
+docker exec -it ${CONTAINER_ID} /bin/bash
+
+Action : (get Container Images or Running Container Ids)
+docker ps (see running containers)
+docker ps -a (need to use this to see stopped containers, if you run a container with -rm flag then when you stop a container the rm is automatic, for example for post-mortem troubleshooting, looking at container logs inside the container, but it's usual to sue -rm as containers are often run as disposable compute)
+docker images (to see all local images)
+
+Action: (cURL to test the server from the terminal)
+curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json"
+
+============================
+***Containerise FrontEnd***
+============================
+
+Action: (to install NPM)
+npm i
+
+Action: 
+(create empty Dockerfile in frontend folder and copy contents from Andrew's journal)
+
+Action: (could build the container like the backend)
+cd .. (switch to home folder)
+docker build -t frontend-react-js ./frontend-react-js
+docker run -p 3000:3000 -d frontend-react-js
+
+Build Multiple Containers using docker compose
+Action: 
+(Create empty docker-compose.yml file at the root of your project and copy contents from Andrew's journal)
+
+Action:
+docker compose up
+or
+right-click on the file in VSCode and click 'Compose Up'
+
+Note: All working, yay!!!
+
+Action: Mount directories so we can make changes while we code (change message in home_acitivities.py)
+Note: notice change instantly reflected as the container has mounted the local directory as per docker compose yaml file.
+
+Action: (stop both containers in one go)
+docker stop containerid1 containerid2
+eg docker stop d7b8086ef2e1 2dfe51f7dbe7
 
 #TASKS
-- Containerize Application (Dockerfiles, Docker Compose)
+- Containerize Application (Dockerfiles, Docker Compose) - done
 - Document the Notification Endpoint for the OpenAI Document
 - Write a Flask Backend Endpoint for Notifications
 - Write a React Page for Notifications
