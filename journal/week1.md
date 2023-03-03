@@ -374,6 +374,6 @@ Docker Compose Documentation - https://docs.docker.com/compose/gettingstarted/
 
 23/03/2023
 Push and tag a image to DockerHub
-<screenshot>
+![image](https://user-images.githubusercontent.com/22940535/222759396-a33f8700-2c92-407b-9593-f1b31b0c8bcf.png)
 
 Ran out of time, will need to catch up on extension/challenge tasks, even if it is after grading
