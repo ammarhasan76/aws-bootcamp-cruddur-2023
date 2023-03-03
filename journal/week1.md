@@ -1,5 +1,13 @@
 # Week 1 — App Containerization
 
+#TASKS
+- Containerize Application (Dockerfiles, Docker Compose) - done
+- Document the Notification Endpoint for the OpenAI Document - done
+- Write a Flask Backend Endpoint for Notifications - done
+- Write a React Page for Notifications - done
+- Run DynamoDB Local Container and ensure it works - done
+- Run Postgres Container and ensure it works - done
+
 21/FEB/2023
 Completed watching: How to Ask for Technical Help (Before You Ask For Help Watch This)
 https://www.youtube.com/watch?v=tDPqmwKMP7Y
@@ -186,10 +194,179 @@ Action: (stop both containers in one go)
 docker stop containerid1 containerid2
 eg docker stop d7b8086ef2e1 2dfe51f7dbe7
 
-#TASKS
-- Containerize Application (Dockerfiles, Docker Compose) - done
-- Document the Notification Endpoint for the OpenAI Document
-- Write a Flask Backend Endpoint for Notifications
-- Write a React Page for Notifications
-- Run DynamoDB Local Container and ensure it works
-- Run Postgres Container and ensure it works
+02/MAR/2023
+Watched: Chirag's Week 1 - Spending Considerations (Gitpod, Github Codespaces, AWS Cloud9 and Cloudtrail)
+https://www.youtube.com/watch?v=OAMHu1NiYoI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=24
+Study Notes:
+
+GitPod
+50hrs usage / month (actually 500 credits a month)
+Std: 4 cores, 8gb ram, 30gb storage
+Avoid running Workspaces in parallel as it will expend credits
+30mins timeout helps avoid using credits when you forget to stop a Workspace
+Calculator: https://www.gitpod.io/pricing
+
+Github CodeSpaces
+60hrs/month @ 2core, 4gb ram, 15gb storage
+30hrs/month @ 4core, 8gb ram, 15gb storage
+https://github.com/features/codespaces
+https://github.com/pricing/calculator
+
+AWS Cloud9
+Free t2.micro instance in your account
+Avoid as it uses your ec2 t2 credits
+https://aws.amazon.com/cloud9/pricing/
+Note: its still cheap:
+If you use the default settings running an IDE for 4 hours per day for 20 days in a month with a 30-minute auto-hibernation setting your monthly charges for 90 hours of usage would be:
+
+Compute fees*	$1.05	t2.micro Linux instance at $0.0116/hour x 90 total hours used per month = $1.05
+Storage fees	$1.00	$0.10 per GB-month of provisioned storage x 10-GB storage volume = $1.00
+Total monthly fees	$2.05	 
+
+CloudTrail
+Avoid unless necessary usage of services (for dev env)
+If need to use, minimize usage of options:
+Deselect KMS
+Deselect Data Events
+Deselect Inisghs Events
+Note: default is 90 days of CT data so you can still have some data even if not swticheed on
+
+
+02/MAR/2023
+Watched: Ashish's Week 1 - Container Security Considerations (Top 10 Docker Container Security Best Practices with Tutorial)
+https://www.youtube.com/watch?v=OjZz4D0B-cA&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=25
+Study Notes:
+
+
+02/MAR/2023
+Watched: Week 1 - Create the notification feature (Backend and Front)
+https://www.youtube.com/watch?v=k-_o0cCpksk&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=27
+Study Notes:
+
+- document a new api endpoint in OpenAPI
+
+https://www.openapis.org/
+https://readme.com/
+
+Action: click show preview with default browser icon (top-right) to see openai (swagger view of the APIs)
+Action: can check OpenAPI specification at: https://spec.openapis.org/oas/latest.html
+Action: click on split tab to help with coding a new endpoint based on existing endpoint
+
+$ref: '#/components/schemas/Activity' = look at the bottom of the file, the schema is defined there and using the OpenAPI preview, you can see the schema for the new endpoint is updated with the schema details
+
+https://www.toptal.com/ruby-on-rails/rails-service-objects-tutorial#:~:text=What%20is%20a%20service%20object,API%20like%20posting%20a%20tweet.
+
+- implement a Backend endpoint (Notifications) - Git Commit: TBC
+
+- implement a Frontend UI  - Git Commit: TBC
+
+
+02/MAR/2023
+Watched: Week 1 - Run DynamoDB Local Container and ensure it works and Run Postgres Container and ensure it works (Week 1 - DynamoDB and Postgres vs Docker)
+https://www.youtube.com/watch?v=CbQNMaa6zTg&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=28
+Study Notes:
+
+Action: update docker-compose.yml to add DynamoDB Local and Postgres
+
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html
+
+Example of using DynamoDB Local:
+https://github.com/100DaysOfCloud/challenge-dynamodb-local
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+Action: (need to get aws defaults entered)
+aws configure
+access key: (get from AWS console)
+secret access key: (get from AWS console)
+
+Action: updated gitpod.yml for aws, postgres installations and added postgres extension
+
+Action: using extension add database connection
+
+Action: connect through the terminal
+psql -h localhost -U postgres
+\d
+\t
+\dl
+\l
+
+03/MAR/2023
+Watched Ashish's Week 1 - Container Security Considerations (Top 10 Docker Container Security Best Practices with Tutorial) 
+https://www.youtube.com/watch?v=OjZz4D0B-cA&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=25
+StudyNotes:
+Docker Security Components:
+Docker & Host Configuration
+Securiing Images
+Secret Management
+Application Security
+Data Security
+Monitoring Containers
+Compliance Framework
+
+10 Container Security Best Practices:
+Keep Host & Docker Updated to latest security Patches
+Docker daemon & containers should run in non-root user mode
+
+Image Vulnerability Scanning
+Trusting a Private vs Public Image Registry
+
+No Sensitive Data in Docker files or Images
+Use Secret Management Services to Share secrets
+
+Read only File system and Volume for Docker
+Separate databases for long term storage
+
+Use DevSecOps practices while building application security
+Ensure all Code is tested for vulnerabilities before production use
+
+Tools & Demos:
+
+Snyk: repo & image scanning
+Can run in terminal (synk container test CONTAINERIMAGENAME)
+
+Secret Management Tools
+AWS Secret Manager or Hashicorp Vault
+
+AWS Secret Manager:
+Charged per secret and for API calls
+Use automatic rotation
+
+Image Vulnerability Scanning
+AWS Inpector or CLAIR
+
+AWS Inspector (EC2 images, Container images, Container registries)
+Scanning
+Can feed info into/results related AWS services
+
+AWS Managed Container Services
+AWS ECS, AWS EKS, AWS Fargate, AWS App Runner, AWS CoPilot
+
+Integration with AWS Service
+Uses automation to provision containers at scale with speed & security
+
+Further Learning Topics:
+Docker Host & Container Security
+Docker Image Registry
+Docker Security Benchmarks
+Docker Network Security
+Docker container secrets
+Docker Read-Only filesystem & volumes
+
+Appendix:
+Cloud Security BootCamp Tools ►  https://cloudsecuritybootcamp.com
+Follow me on Twitter  ►  https://twitter.com/hashishrajan
+
+Tools Used in this Video:
+AWS Inspector: https://aws.amazon.com/inspector/
+AWS Secret Manager: https://aws.amazon.com/secrets-manager/
+Clair: https://github.com/quay/clair
+Snyk Container/ Snyk Open Source Tool: https://snyk.co/cloudbootcamp
+Snyk Cli - https://docs.snyk.io/snyk-cli/install-the-snyk-cli
+
+Github Repositories:
+Vulnerable Dockerfile - https://github.com/snyk-labs/docker-goof
+Docker Compose Documentation - https://docs.docker.com/compose/gettingstarted/
+ 
