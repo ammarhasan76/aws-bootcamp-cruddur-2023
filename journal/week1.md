@@ -369,4 +369,11 @@ Snyk Cli - https://docs.snyk.io/snyk-cli/install-the-snyk-cli
 Github Repositories:
 Vulnerable Dockerfile - https://github.com/snyk-labs/docker-goof
 Docker Compose Documentation - https://docs.docker.com/compose/gettingstarted/
- 
+
+**Challenge Tasks**
+
+23/03/2023
+Push and tag a image to DockerHub
+<screenshot>
+
+Ran out of time, will need to catch up on extension/challenge tasks, even if it is after grading
