@@ -38,7 +38,7 @@ In UI, create a new 'bootcamp' env
 *note: export means that env var is available in all the shells for that host
 
 *note gp env is to add something to the gitpod.yml file so it doesn't need to keep getting defined every time you start a new Workspace*  
-`gp env HONEYCOMB_API_KEY="8Or1b0hpzLK7wCrUJW4wsB"`
+`gp env HONEYCOMB_API_KEY="<removed>"`
 
 *note: gp env stores the variable in Variables in https://gitpod.io/user/variables*
 
