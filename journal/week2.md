@@ -53,52 +53,57 @@ Action: (add OTEL_SERVICE_NAME to docker compose yml, you need a different servi
 
 #### Install Packages
 
-Action: (install python packages required to instrument and export telemetry to honeycomb to requirements.txt in ./backend-flask)  
-```opentelemetry-api 
+Action: (install python packages required to instrument and export telemetry to honeycomb to requirements.txt in ./backend-flask)
+```
+opentelemetry-api 
 opentelemetry-sdk 
 opentelemetry-exporter-otlp-proto-http 
 opentelemetry-instrumentation-flask 
-opentelemetry-instrumentation-requests```
+opentelemetry-instrumentation-requests
+```
 
 
 Action: (install python dependencies)  
-```cd ./backend-flask```
-```pip install -r requirements.txt```
-
+`cd ./backend-flask`  
+`pip install -r requirements.txt`
 
 #### Initialise Packages
 Action: (add packages to app.py and initialise objects)  
 
-
-```/# Honeycomb - OTEL
-/# Packages
+``` 
+# Honeycomb - OTEL
+# Packages
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor```
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+```
 
-
-```/# Honeycomb - OTEL
-/# Initialize tracing and an exporter that can send data to Honeycomb
+```
+# Honeycomb - OTEL
+# Initialize tracing and an exporter that can send data to Honeycomb
 provider = TracerProvider()
 processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 trace.set_tracer_provider(provider)
-tracer = trace.get_tracer(__name__)```
+tracer = trace.get_tracer(__name__)
+```
 
-
-```/# Honeycomb - OTEL
-/# Initialize automatic instrumentation with Flask
+```
+# Honeycomb - OTEL
+# Initialize automatic instrumentation with Flask
 FlaskInstrumentor().instrument_app(app)
-RequestsInstrumentor().instrument()```
+RequestsInstrumentor().instrument()
+```
 
 *note: reference: (https://docs.honeycomb.io/getting-data-in/opentelemetry/python/)*
 
 Action: (npm install - due to in dev container we mapped the local volume so it's missing from the container build???)  
-`cd ../frontend-react-js/'
-`npm i`
+```cd ../frontend-react-js/
+npm i
+```
 
 *Note to self to look into: From livestream chatIuliana Silvasan: I've added 'npm install' via ENTRYPOINT script*
 
@@ -106,15 +111,5 @@ Action:
 *edited app.py for the span processors*
 
 Action:
-*ran docker compose up*
+*ran docker compose up*  
 *checked honeycomb for data successfully*
-
-
-
-
-
-
-
-
-
-
