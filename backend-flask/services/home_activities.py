@@ -51,7 +51,7 @@ class HomeActivities:
       'replies': []
     }
     ]
-    #with tracer.start_as_current_span("home-activities-mock-data"):
+    #with tracer.start_as_current_span("home-activities-mock-data"): if I uncomment this then it attributes make it into honeycomb but as another span, not within first span
     span = trace.get_current_span()
     span.set_attribute("app.result_length", len(results))
     span.set_attribute("app.tag", 'taggingtest')
