@@ -1,7 +1,17 @@
 from datetime import datetime, timedelta, timezone
+from opentelemetry import trace
+
+#instantiate a tracer, the tracer provider was already instatiated in app.py
+tracer = trace.get_tracer("home.activities")
+
 class HomeActivities:
   def run():
-    now = datetime.now(timezone.utc).astimezone()
+    with tracer.start_as_current_span("home-activities-mock-data"):
+      # span make sure span context is the correcnt span
+      span = trace.get_current_span()
+      now = datetime.now(timezone.utc).astimezone()
+      span.set_attribute("app.now", now.isoformat())
+      span.set_attribute("app.test", "hello world")
     results = [{
       'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
       'handle':  'Andrew Brown',
@@ -41,4 +51,9 @@ class HomeActivities:
       'replies': []
     }
     ]
+    #with tracer.start_as_current_span("home-activities-mock-data"):
+    span = trace.get_current_span()
+    span.set_attribute("app.result_length", len(results))
+    span.set_attribute("app.tag", 'taggingtest')
+    span.set_attribute("app.test2", 'goodbye world')
     return results
