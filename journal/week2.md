@@ -33,7 +33,7 @@ Action:
 In UI, create a new 'bootcamp' env
 
 *note: standard env vars naming for the API key is: honeycomb_api_key*  
-`export HONEYCOMB_API_KEY="8Or1b0hpzLK7wCrUJW4wsB"`
+`export HONEYCOMB_API_KEY="<removed>"`
 
 *note: export means that env var is available in all the shells for that host
 
