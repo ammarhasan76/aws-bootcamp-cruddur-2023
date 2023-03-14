@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta, timezone
 # Import the X-Ray SDK
 from aws_xray_sdk.core import xray_recorder
+# from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 class UserActivities:
   def run(user_handle):
     # X-Ray ---
     # Start a segment
-    segment = xray_recorder.begin_segment('home_activities')
+    parent_subsegment = xray_recorder.begin_subsegment('user-activities')
 
     model = {
       'errors': None,
@@ -15,11 +16,11 @@ class UserActivities:
 
     now = datetime.now(timezone.utc).astimezone()
 
-    dict = {
+    parent_xray_dict = {
       "now": now.isoformat()
     }
     
-# segment.put_metadata('key', dict, 'namespace')
+    parent_subsegment.put_metadata('key', parent_xray_dict, 'user_activities')
 
     if user_handle == None or len(user_handle) < 1:
       model['errors'] = ['blank_user_handle']
@@ -33,15 +34,20 @@ class UserActivities:
         'expires_at': (now + timedelta(days=31)).isoformat()
       }]
       model['data'] = results
-    
+  
     # X-Ray ---
-    # Start a subsegment
-    subsegment = xray_recorder.begin_subsegment('mock-data')
+    subsegment = xray_recorder.begin_subsegment('user-activities_subsegment')
+
     dict = {
       "now": now.isoformat(),
       "results-size": len(model['data'])
     }
-    subsegment.put_metadata('key', dict, 'namespace')
+
+    subsegment.put_metadata('results', dict, 'user_activities_subsegment')
+
+    # subsegment.put_annotation('key', 'value')
+
     xray_recorder.end_subsegment()
-    xray_recorder.end_segment()
+
+    xray_recorder.end_subsegment()
     return model

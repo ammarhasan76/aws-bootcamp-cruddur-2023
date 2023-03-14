@@ -15,7 +15,7 @@ from services.create_message import *
 from services.show_activity import *
 
 # Honeycomb - OTEL
-# Packages
+# Import Packages
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
@@ -24,12 +24,16 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
 
-# CloudWatch logging
+# Import CloudWatch logging
 import watchtower
 import logging
 from time import strftime
 
-# Configuring Logger to Use CloudWatch
+# Import the X-Ray SDK
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+# Initialising CloudWatch logging
 LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.DEBUG)
 console_handler = logging.StreamHandler()
@@ -37,10 +41,6 @@ cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
 LOGGER.addHandler(console_handler)
 LOGGER.addHandler(cw_handler)
 LOGGER.info("Home Activities")
-
-# Import the X-Ray SDK
-from aws_xray_sdk.core import xray_recorder
-from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 # Honeycomb - OTEL
 # Initialize tracing and an exporter that can send data to Honeycomb
