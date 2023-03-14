@@ -7,8 +7,9 @@ class UserActivities:
   def run(user_handle):
     # X-Ray ---
     # Start a segment
+    
     parent_subsegment = xray_recorder.begin_subsegment('user-activities')
-
+    parent_subsegment.put_annotation('notes','this is an annotation!!')
     model = {
       'errors': None,
       'data': None
@@ -45,7 +46,7 @@ class UserActivities:
 
     subsegment.put_metadata('results', dict, 'user_activities_subsegment')
 
-    # subsegment.put_annotation('key', 'value')
+    subsegment.put_annotation('notes','this is another annotation!!')
 
     xray_recorder.end_subsegment()
 
