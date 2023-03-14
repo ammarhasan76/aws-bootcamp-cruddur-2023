@@ -23,6 +23,11 @@ tasks:
       echo "Changed Working Directory to frontend-react-js"
       npm i
       echo "npm installation complete"
+  - name: pythonpackages
+    init: |
+      cd ./backend-flask
+      pip install -r requirements.txt
+      echo "python package installations complete"
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
