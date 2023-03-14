@@ -48,7 +48,7 @@ provider = TracerProvider()
 processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 
-# Generating spans local to the backend-flask container (stdout)
+# Honeycomb - Generating spans local to the backend-flask container (stdout)
 simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
 provider.add_span_processor(simple_processor)
 
