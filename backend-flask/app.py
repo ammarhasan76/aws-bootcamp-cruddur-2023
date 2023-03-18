@@ -86,7 +86,7 @@ cors = CORS(
   methods="OPTIONS,GET,HEAD,POST"
 )
 
-# log entry after every request
+# CloudWatch - create a log entry after every request
 @app.after_request
 def after_request(response):
   timestamp = strftime('[%Y-%b-%d %H:%M]')

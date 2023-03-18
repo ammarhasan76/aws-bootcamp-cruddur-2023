@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from opentelemetry import trace
 
-#instantiate a tracer, the tracer provider was already instatiated in app.py
+# Honeycomb - instantiate a tracer, the tracer provider was already instatiated in app.py
 tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
