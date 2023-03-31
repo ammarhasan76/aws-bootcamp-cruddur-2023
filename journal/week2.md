@@ -783,7 +783,28 @@ Raw JSON:
 }
 ```
 
+## Comment on Commit History  
+I had a whole bunch of commits for Rollbar, CloudTrail, X-Ray Spans, bugfixes etc, but I made an error and committed my AWS ACCESS KEY and TOKEN to the repo in the  Journal entry :sad:  
 
+Something starting created a whole bunch of resources that afternoon, luckily AWS automated security monitoring picked it up before any bill was run up (they seemed to catch it whilst it was standing up a whole bunch of infrastrucutre - but before actually running any compute ..... they blocked my compromised IAM account (at least it wasnt root!!!) ... I learnt a very scary lesson!  
+
+Using AWS Resource Explorer, I found a whole bunch of resources that I didn't recognise, so had to manually clean it up whilst liaising with AWS Support, so I lost more than week in that clean-up effort (this also caused some self-doubt which took some time to get over).
+
+I was left with one issue, whilst I immediately deleted the keys from the repo Jornal entry and removed the keys from the compromised IAM account, I was left still wit h the git history showing those keys, now those keys were deleted but it still felt 'dirty', so I spent quite some time trying to get rid of the commit history that showed the deleted keys. I research various git guides and commands -- the rebase worked but it still left an orphaned github blob accessable (even though nothing linked to it).  
+
+In the end I used two very helpful articles I managed to find to solve that problem :joy:  
+https://whitep4nth3r.com/blog/rewrite-git-history  
+https://dev.to/ismailpe/duplicating-a-github-repo-with-history-3223
+
+So the problem was fixed and I had completed all the homework tasks, the evidence is above in the Journal and in the repo but it is missing some commit history due to the rebase to remove the keys.
+
+I later found out that a support request to github can also get an orphaned commit blob removed.
+
+After losing two weeks to this error I will now move on to the next week's work.
+
+I think I will write a blog on this and share on discord user group (especially as it's a homework due by the end of the bootcamp)
+
+I've learnt a valuable lesson from this near miss!
 
 ================================
 
