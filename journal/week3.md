@@ -53,7 +53,7 @@ Add the necessary env vars to docker_compose.yml to enable Amplify in the fronte
 ...
   frontend-react-js:
     environment:
-      REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+      ...
       REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAUT_REGION}"
       REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID:
       REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAUT_REGION}"
