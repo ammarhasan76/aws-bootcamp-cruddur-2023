@@ -14,7 +14,7 @@ export default function ProfileInfo(props) {
     setPopped(!popped)
   }
 
-  // replaced previous Cookie based version with this this auth based version:
+  // replaced previous Cookie based version with this this auth based version :
   const signOut = async () => {
     try {
         await Auth.signOut({ global: true });
