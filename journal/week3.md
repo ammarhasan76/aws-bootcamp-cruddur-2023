@@ -54,9 +54,9 @@ Add the necessary env vars to docker_compose.yml to enable Amplify in the fronte
   frontend-react-js:
     environment:
       ...
-      REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAUT_REGION}"
+      REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAULT_REGION}"
       REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID:
-      REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAUT_REGION}"
+      REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAULT_REGION}"
       REACT_APP_AWS_USER_POOLS_ID: "${AWS_USER_POOL_ID}" 
       REACT_APP_CLIENT_ID: "${AWS_COGNITO_CLIENT_ID}"
 ...
