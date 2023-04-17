@@ -144,7 +144,9 @@ const signOut = async () => {
 }
 ```
 
+Ran a test 'Docker Compose Up' but only saw blank homepage, following the video, needed a fix to a parameter in app.js: `userPoolWebClientId: process.env.REACT_APP_CLIENT_ID`, as it was referencing a non-existent env var.
 
+Reran test and front page was working 😂
 
 
 
