@@ -48,7 +48,7 @@ npm i aws-amplify --save
  
 ## Configure Amplify
 
-Add the necessary env vars to docker_compose.yml to enable Amplify in the frontend
+Add the necessary env vars to docker_compose.yml to enable Amplify in the frontend, `AWS_DEFAULT_REGION` already defined, so added gitpod variables for the Cognito User Pool ID and Cognito App Client ID  
 ```
 ...
   frontend-react-js:
