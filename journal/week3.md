@@ -57,8 +57,8 @@ Add the necessary env vars to docker_compose.yml to enable Amplify in the fronte
       REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAUT_REGION}"
       REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID:
       REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAUT_REGION}"
-      REACT_APP_AWS_USER_POOLS_ID: "us-east-1_iujSlyvwd" 
-      REACT_APP_CLIENT_ID: "2j1510cdqd6nbldechcp3vosu"
+      REACT_APP_AWS_USER_POOLS_ID: "${AWS_USER_POOL_ID}" 
+      REACT_APP_CLIENT_ID: "${AWS_COGNITO_CLIENT_ID}"
 ...
 ```
 
