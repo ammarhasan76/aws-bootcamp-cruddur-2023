@@ -16,19 +16,18 @@ export default function SigninPage() {
   const onsubmit = async (event) => {
     setErrors('') // set errors to blank so we don't see errors
     event.preventDefault(); // don't submit the form so the below code can run
-    try {
       Auth.signIn(email, password) // pass-in authentication details and a user object is returned
         .then(user => {
           localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken) // store JWT in secure local storage
           window.location.href = "/"
         })
-        .catch(err => { console.log('Error!', err) });
-    } catch (error) {
-      if (error.code == 'UserNotConfirmedException') {
-        window.location.href = "/confirm" // send to user confirmation page if the user is not confirmed yet
-      }
+        .catch(error => {
+          console.log('Error!', error)
+          if (error.code == 'UserNotConfirmedException') {
+            window.location.href = "/confirm" // send to user confirmation page if the user is not confirmed yet
+          }
       setErrors(error.message)
-    }
+    });
     return false
   }
   
