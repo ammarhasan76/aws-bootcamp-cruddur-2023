@@ -148,6 +148,27 @@ Ran a test 'Docker Compose Up' but only saw blank homepage, following the video,
 
 Reran test and front page was working 😂
 
+## Custom Sign-In Page
+
+1. Updated SigninPage.js to handle error of incorrect login:
+![Screenshot 2023-05-02 161300](https://user-images.githubusercontent.com/22940535/235710939-e7a9d6b8-3010-481d-b57b-67dd8978364c.png)
+
+2. Created a new user in the AWS Console:
+![image](https://user-images.githubusercontent.com/22940535/235709485-c101696d-cd1b-4d62-989d-6260818d695a.png)
+
+3. Ran AWS CLI command to prevent forced password change:  
+`aws cognito-idp admin-set-user-password --user-pool-id us-east-1_iujSlyvwd --username ammarhasan76 --password XXXXXXXX --permanent`  
+![image](https://user-images.githubusercontent.com/22940535/235709889-7eba7150-5581-44d7-a47f-a99e251fb74c.png)  
+![Screenshot 2023-05-02 153721](https://user-images.githubusercontent.com/22940535/235710573-c88bf0e6-480c-4dad-b84e-114cb98d789c.png)
+
+4. Tested login successfully:
+![Screenshot 2023-05-02 154138](https://user-images.githubusercontent.com/22940535/235710717-f5547b70-7d25-4aca-9412-3269fc4b58c1.png)
+
+
+
+
+
+
 
 
 
