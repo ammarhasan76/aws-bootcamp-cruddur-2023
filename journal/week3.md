@@ -173,6 +173,148 @@ Reran test and front page was working 😂
 ![image](https://user-images.githubusercontent.com/22940535/235986425-fe0d4fef-1780-4e7e-9996-036def07e360.png)
 ![image](https://user-images.githubusercontent.com/22940535/235986464-26d30475-aebb-491b-97a5-d985bd9646c5.png)
 
+## Custom Sign-up Page & Confirmation Page
+
+1. Update `SignupPage.js` by replacing cookies with amplify:  
+```
+...
+import { Auth } from 'aws-amplify';
+...
+```
+
+2. Replace `onsubmit` function:  
+```
+...
+ const onsubmit = async (event) => {
+    event.preventDefault();
+    setCognitoErrors('')
+    try {
+        const { user } = await Auth.signUp({
+          username: email,
+          password: password,
+          attributes: {
+              name: name,
+              email: email,
+              preferred_username: username,
+          },
+          autoSignIn: { // optional - enables auto sign in after user is confirmed
+              enabled: true,
+          }
+        });
+        console.log(user);
+        window.location.href = `/confirm?email=${email}`
+    } catch (error) {
+        console.log(error);
+        setCognitoErrors(error.message)
+    }
+    return false
+  }
+...
+```
+
+3. Update `ConfirmationPage.js` by replacing cookies with amplify:  
+```
+...
+import { Auth } from 'aws-amplify';
+...
+```
+
+4. Replace `resend_code` function:  
+```
+...
+const resend_code = async (event) => {
+  setCognitoErrors('')
+  try {
+    await Auth.resendSignUp(email);
+    console.log('code resent successfully');
+    setCodeSent(true)
+  } catch (err) {
+    // does not return a code
+    // does cognito always return english
+    // for this to be an okay match?
+    console.log(err)
+    if (err.message == 'Username cannot be empty'){
+      setCognitoErrors("You need to provide an email in order to send Resend Activiation Code")   
+    } else if (err.message == "Username/client id combination not found."){
+      setCognitoErrors("Email is invalid or cannot be found.")   
+    }
+  }
+}
+...
+```
+
+5. Replace `onsubmit` function:
+```
+...
+const onsubmit = async (event) => {
+  event.preventDefault();
+  setCognitoErrors('')
+  try {
+    await Auth.confirmSignUp(email, code);
+    window.location.href = "/"
+  } catch (error) {
+    setCognitoErrors(error.message)
+  }
+  return false
+}
+...
+```
+
+6. Attempted sign-up but failed due to problem with the Cognito Pool, so had to recreate the pool but with just Email sign-in option, updated the Cognito Pool ID and ClientID and restarted and retested sign-ip & confirmation:  
+
+<screenshots>
+
+Success! :joy:
+
+
+## Custom Recovery Page
+
+1. Added amplify auth to `RecoverPage.js`
+```
+...
+import { Auth } from 'aws-amplify';
+...
+```
+
+2. Replaced `onsubmit_send_code` function
+
+```
+...
+const onsubmit_send_code = async (event) => {
+  event.preventDefault();
+  setCognitoErrors('')
+  Auth.forgotPassword(username)
+  .then((data) => setFormState('confirm_code') )
+  .catch((err) => setCognitoErrors(err.message) );
+  return false
+}
+...
+```
+
+3. Replaced `onsubmit_confirm_code` function
+
+```
+...
+const onsubmit_confirm_code = async (event) => {
+  event.preventDefault();
+  setCognitoErrors('')
+  if (password == passwordAgain){
+    Auth.forgotPasswordSubmit(username, code, password)
+    .then((data) => setFormState('success'))
+    .catch((err) => setCognitoErrors(err.message) );
+  } else {
+    setCognitoErrors('Passwords do not match')
+  }
+  return false
+}
+...
+```
+
+4. Attempted recovery process
+
+<screenshots>
+
+Success :joy:
 
 
 
