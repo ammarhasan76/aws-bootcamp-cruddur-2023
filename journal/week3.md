@@ -162,7 +162,18 @@ Reran test and front page was working 😂
 ![Screenshot 2023-05-02 153721](https://user-images.githubusercontent.com/22940535/235710573-c88bf0e6-480c-4dad-b84e-114cb98d789c.png)
 
 4. Tested login successfully:
-![Screenshot 2023-05-02 154138](https://user-images.githubusercontent.com/22940535/235710717-f5547b70-7d25-4aca-9412-3269fc4b58c1.png)
+![Screenshot 2023-05-02 154138](https://user-images.githubusercontent.com/22940535/235710717-f5547b70-7d25-4aca-9412-3269fc4b58c1.png)  
+![image](https://user-images.githubusercontent.com/22940535/235986265-33e41dc2-e5c9-43b3-8cae-17cdc9230a3c.png)
+
+5. Tested sign-out successfully:  
+![image](https://user-images.githubusercontent.com/22940535/235985768-a72c22b5-55a0-4cf0-ac11-6c7c43ce5529.png)  
+![image](https://user-images.githubusercontent.com/22940535/235985816-3766bac9-37ca-4fa8-af85-964b53a39258.png)
+
+6. Added preferred username in AWS Console, so it appears in the frontend:  
+![image](https://user-images.githubusercontent.com/22940535/235986425-fe0d4fef-1780-4e7e-9996-036def07e360.png)
+![image](https://user-images.githubusercontent.com/22940535/235986464-26d30475-aebb-491b-97a5-d985bd9646c5.png)
+
+
 
 
 
