@@ -18,6 +18,7 @@ export default function SigninPage() {
     event.preventDefault(); // don't submit the form so the below code can run
       Auth.signIn(email, password) // pass-in authentication details and a user object is returned
         .then(user => {
+          // console.log('user',user) // this doesn't seem to add anything to the console output? the user object appears in the console even with this console.log commented out
           localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken) // store JWT in secure local storage
           window.location.href = "/"
         })
