@@ -260,9 +260,18 @@ const onsubmit = async (event) => {
 ...
 ```
 
-6. Attempted sign-up but failed due to problem with the Cognito Pool, so had to recreate the pool but with just Email sign-in option, updated the Cognito Pool ID and ClientID and restarted and retested sign-ip & confirmation:  
+6. Attempted sign-up but failed due to problem with the Cognito Pool, so had to recreate the pool but with just Email sign-in option, updated the Cognito Pool ID and ClientID and restarted and retested sign-up & confirmation:  
 
-<screenshots>
+Error:  
+![image](https://user-images.githubusercontent.com/22940535/236021999-5b2ec38d-e377-4c39-90c7-2d18447775c3.png)
+
+After recreating Cognito Pool:  
+![image](https://user-images.githubusercontent.com/22940535/236022106-598fe770-18a6-49f1-bfd2-e5a62201c524.png)
+![image](https://user-images.githubusercontent.com/22940535/236022157-f4fe7713-f79b-4d41-abe4-8ab9e439e50a.png)
+
+Before confirmation:
+![image](https://user-images.githubusercontent.com/22940535/236022219-659ca24f-d50b-4176-a1fb-7a183ac64d2e.png)
+![image](https://user-images.githubusercontent.com/22940535/236022261-5fb509fb-e77e-42ab-8dc1-364e509587ab.png)
 
 Success! :joy:
 
@@ -310,9 +319,12 @@ const onsubmit_confirm_code = async (event) => {
 ...
 ```
 
-4. Attempted recovery process
+4. Successful attempt recovery process
 
-<screenshots>
+![image](https://user-images.githubusercontent.com/22940535/236022329-c60b71c8-7ba7-4ca4-8698-64bf7f34e965.png)
+![image](https://user-images.githubusercontent.com/22940535/236022400-c06ef47f-ac64-4b27-b594-3eb317743fd4.png)
+![image](https://user-images.githubusercontent.com/22940535/236022444-73de21df-bb5b-4203-92ac-b6b1ccc52c43.png)
+![image](https://user-images.githubusercontent.com/22940535/236022467-a8d5fdbf-c064-41ce-81c1-15ca20cf7229.png)
 
 Success :joy:
 
