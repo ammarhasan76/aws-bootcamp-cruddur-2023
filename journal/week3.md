@@ -328,6 +328,60 @@ const onsubmit_confirm_code = async (event) => {
 
 Success :joy:
 
+## Cognito JWT Server-side Verify
+
+1. In `HomeFeedPage.js` added the following to the `loadData` function in order to pickup the JWT:  
+```
+...
+      const res = await fetch(backend_url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`
+        },
+...
+```
+
+2. Searched for "how do I view headers in request in flask"
+https://stackoverflow.com/questions/29386995/how-to-get-http-headers-in-flask
+
+In `app.py` added the following to /api/activities/home:  
+```
+...
+  print(
+    request.headers.get('Authorization')
+  )
+...
+```
+
+3. This didn't work, after troubleshooting it was found to be a CORS issue + the print() didn't work, so in `app.py` replaced existing CORS code with:
+```
+...
+cors = CORS(
+  app, 
+  resources={r"/api/*": {"origins": origins}},
+  headers=['Content-Type', 'Authorization'], 
+  expose_headers='Authorization',
+  methods="OPTIONS,GET,HEAD,POST"
+)
+...
+```
+
+and add `app.py` added logging statements to replace the print statements:  
+```
+...
+  app.logger.debug('AUTH HEADER----')
+  app.logger.debug(
+        request.headers.get('Authorization')
+  )
+...
+```
+
+Success :joy:
+
+![Screenshot 2023-05-05 120706](https://user-images.githubusercontent.com/22940535/236444281-abbe9d9b-a774-4f3b-9088-9b9f2e67f74f.png)
+
+
+
+
 
 
 
