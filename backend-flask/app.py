@@ -42,7 +42,7 @@ from flask import got_request_exception
 # Import Flask-AWSCognito
 # from flask_awscognito import FlaskAWSCognitoError, TokenVerifyError <- no longer needed as we extracted what we needed from the library into our ownn lib
 # Import our custom version of token_service.py from the Flask-AWSCognito library as we need workaround not having a Cognito Client Secret
-from lib.cognito_jwt_token import CognitoJwtToken, FlaskAWSCognitoError, TokenVerifyError
+from lib.cognito_jwt_token import CognitoJwtToken, TokenVerifyError, extract_access_token
 # Setting HTTP_HEADER as part of extracting access token
 HTTP_HEADER = "Authorization"
 
@@ -183,16 +183,23 @@ def data_home():
   app.logger.debug('--------------- CognitoJwtToken ---------------')
   app.logger.debug(cognito_jwt_token)
 
-  access_token = cognito_jwt_token.extract_access_token(request.headers)
+  access_token = extract_access_token(request.headers)
   try:
       claims = cognito_jwt_token.verify(access_token)
+      # authenticated
+      app.logger.debug('--------------- Authenticated ---------------')
+      app.logger.debug('access_token')
+      app.logger.debug(access_token)
+      app.logger.debug('claims')
+      app.logger.debug(claims)
+      app.logger.debug('username')
+      app.logger.debug(claims['username'])
+      data = HomeActivities.run(logger=LOGGER,cognito_user_id=claims['username'])
   except TokenVerifyError as e:
-      _ = request.data
-      abort(make_response(jsonify(message=str(e)), 401))
-  app.logger.debug('claims')
-  app.logger.debug(claims)
-
-  data = HomeActivities.run(logger=LOGGER)
+      # unauthenticated
+      app.logger.debug('--------------- Unauthenticated or Authentication Faied ---------------')
+      app.logger.debug(e)
+      data = HomeActivities.run(logger=LOGGER)
   #experiment
   xray_recorder.current_segment().put_annotation('notes','this is an annotation!!')
   now = datetime.now(timezone.utc).astimezone()
