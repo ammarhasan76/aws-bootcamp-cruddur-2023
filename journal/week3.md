@@ -330,6 +330,8 @@ Success :joy:
 
 ## Cognito JWT Server-side Verify
 
+# First task in this section is to get the JWT from client-side to the backend, we do this by sending it in the header when calling HomeFeedPage
+
 1. In `HomeFeedPage.js` added the following to the `loadData` function in order to pickup the JWT:  
 ```
 ...
@@ -378,6 +380,80 @@ and add `app.py` added logging statements to replace the print statements:
 Success :joy:
 
 ![Screenshot 2023-05-05 120706](https://user-images.githubusercontent.com/22940535/236444281-abbe9d9b-a774-4f3b-9088-9b9f2e67f74f.png)
+
+# The next task in this section is to verify the token received is valid.
+
+1. Added Flask-AWSCognito open-source/community libary to the backend Flask module requirements in:  
+`..\backend-flask\requirements.txt`  
+
+Source is https://github.com/cgauge/Flask-AWSCognito, and I can also see by searching, there are a number of similar projects available, such as Flask-Cognito
+
+```
+...
+Flask-AWSCognito
+...
+```
+
+2. In the terminal, refresh package installations:  
+
+```
+cd backend-flask
+pip install -r requirements.txt 
+```
+
+3. Added Cognito env vars to `docker-compose.yml` in the backend section:  
+Note: AWS region is alrady set in backend section: `AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}")`  
+```
+services:
+  backend-flask:
+    environment:
+...
+      AWS_COGNITO_USER_POOL_ID: "${AWS_USER_POOL_ID}"
+      AWS_COGNITO_USER_POOL_CLIENT_ID: "${AWS_COGNITO_CLIENT_ID}"
+...
+```
+
+4. Due to issues with not having a Cognito Client Secret, we needed to work around the FLask-AWSCognito library, specifically the `token_service.py` part of the module:  
+
+- Created `.\backend-flask\lib\cognito_token.verification.py`
+- Copied in `https://github.com/cgauge/Flask-AWSCognito/blob/master/flask_awscognito/services/token_service.py`
+- Customised `cognito_token.verification.py`
+- Added import statements to `app.py` including setting HTTP_HEADER = "Authorization" (which came from `https://github.com/cgauge/Flask-AWSCognito/blob/master/flask_awscognito/constants.py`
+```
+...
+# Import Flask-AWSCognito
+from flask_awscognito import FlaskAWSCognitoError, TokenVerifyError
+# Import our custom version of token_service.py from the Flask-AWSCognito library as we need workaround not having a Cognito Client Secret
+from lib.cognito_token_verification import CognitoTokenVerification
+# Setting HTTP_HEADER as part of extracting access token
+HTTP_HEADER = "Authorization"
+...
+```
+
+5. Further working around not having a Cognito Client Secret:  
+- Copied out the `extract_access_token`function from `https://github.com/cgauge/Flask-AWSCognito/blob/master/flask_awscognito/utils.py` into `cognito_token_verification.py`
+```
+...
+def extract_access_token(request_headers):
+    access_token = None
+    auth_header = request_headers.get(HTTP_HEADER)
+    if auth_header and " " in auth_header:
+        _, access_token = auth_header.split()
+    return access_token
+...
+```
+
+6. Copied code from `authenticaion_required` function in `https://github.com/cgauge/Flask-AWSCognito/blob/master/flask_awscognito/plugin.py` into `app.py`, specifically the `api/activities/home` route:
+```
+access_token = extract_access_token(request.headers)
+            try:
+                self.token_service.verify(access_token)
+                self.claims = self.token_service.claims
+                g.cognito_claims = self.claims
+            except TokenVerifyError as e:
+                _ = request.data
+                abort(make_response(jsonify(message=str(e)), 401))
+```
 
 
 

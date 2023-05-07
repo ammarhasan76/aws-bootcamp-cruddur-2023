@@ -39,6 +39,13 @@ import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
 
+# Import Flask-AWSCognito
+# from flask_awscognito import FlaskAWSCognitoError, TokenVerifyError <- no longer needed as we extracted what we needed from the library into our ownn lib
+# Import our custom version of token_service.py from the Flask-AWSCognito library as we need workaround not having a Cognito Client Secret
+from lib.cognito_jwt_token import CognitoJwtToken, FlaskAWSCognitoError, TokenVerifyError
+# Setting HTTP_HEADER as part of extracting access token
+HTTP_HEADER = "Authorization"
+
 # Initialising CloudWatch logging
 LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.DEBUG)
@@ -63,6 +70,13 @@ tracer = trace.get_tracer(__name__)
 
 app = Flask(__name__)
 
+# JWT Token
+cognito_jwt_token = CognitoJwtToken(
+  user_pool_id = os.getenv("AWS_COGNITO_USER_POOL_ID"),
+  user_pool_client_id = os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+  region = os.getenv("AWS_DEFAULT_REGION")
+  )
+
 # Initialise X-Ray
 xray_url = os.getenv("AWS_XRAY_URL")
 xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
@@ -78,6 +92,8 @@ RequestsInstrumentor().instrument()
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 origins = [frontend, backend]
+
+# Set CORS
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
@@ -152,12 +168,30 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
-#@xray_recorder.capture('home_activities')
+ #@xray_recorder.capture('home_activities')
 def data_home():
-  app.logger.debug("AUTH HEADER----")
-  app.logger.debug(
-        request.headers.get('Authorization')
-  )
+  #logging JWT only for debugging..
+  #app.logger.debug("AUTH HEADER----")
+  #app.logger.debug(
+  #      request.headers.get('Authorization')
+  #)
+  app.logger.debug('--------------- DEBUGGING ---------------')
+  app.logger.debug(request.headers)
+  app.logger.debug(os.getenv("AWS_COGNITO_USER_POOL_ID"))
+  app.logger.debug(os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"))
+  app.logger.debug(os.getenv("AWS_DEFAULT_REGION"))
+  app.logger.debug('--------------- CognitoJwtToken ---------------')
+  app.logger.debug(cognito_jwt_token)
+
+  access_token = cognito_jwt_token.extract_access_token(request.headers)
+  try:
+      claims = cognito_jwt_token.verify(access_token)
+  except TokenVerifyError as e:
+      _ = request.data
+      abort(make_response(jsonify(message=str(e)), 401))
+  app.logger.debug('claims')
+  app.logger.debug(claims)
+
   data = HomeActivities.run(logger=LOGGER)
   #experiment
   xray_recorder.current_segment().put_annotation('notes','this is an annotation!!')
