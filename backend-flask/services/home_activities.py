@@ -56,7 +56,7 @@ class HomeActivities:
     ]
     if cognito_user_id != None:
       extra_crud = {
-              'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+      'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
       'handle':  'Garek',
       'message': 'Extra Crud!!!!',
       'created_at': (now - timedelta(hours=1)).isoformat(),
@@ -64,7 +64,7 @@ class HomeActivities:
       'likes': 0,
       'replies': []
       }
-    results.insert(0,extra_crud)
+      results.insert(0,extra_crud)
     #with tracer.start_as_current_span("home-activities-mock-data"): if I uncomment this then it attributes make it into honeycomb but as another span, not within first span
     span = trace.get_current_span()
     span.set_attribute("app.result_length", len(results))
