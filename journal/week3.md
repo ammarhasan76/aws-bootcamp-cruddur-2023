@@ -625,6 +625,141 @@ A middleware/side-car solution would decouple JWT verification from the main app
 Another way to solve this is to use API-G and use custom authorisers:  
 https://aws.amazon.com/blogs/security/how-to-secure-api-gateway-http-endpoints-with-jwt-authorizer/
 
+### Improving UI Contrast and Implementing CSS Variables for Theming
+Change body backgroun colour
+`frontend-react-js/src/index.css`
+```
+...
+* { box-sizing: border-box; }
+html,body { 
+  height: 100%; 
+  width: 100%; 
+  background: rgb(61,13,123) 
+}
+...
+```
+
+Change border colour of activity items in `frontend-react-js/src/components/ActivityItem.css`
+
+```
+...
+.activity_item {
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px rgb(60,54,79);
+  overflow: hidden;
+  padding: 16px;
+}
+...
+```
+
+Change font colour of desktop sidebar in `frontend-react-js/src/components/DesktopSidebar.css`
+```
+...
+section footer a {
+  text-decoration: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+}
+...
+```
+
+Switch to using variables, updates to `frontend-react-js/src/index.css` and `frontend-react-js/src/components/JoinSection.css`
+`frontend-react-js/src/index.css`:
+```
+...
+:root {
+  --bg: rgb(61,13,123);
+  --fg: #000;
+}
+
+* { box-sizing: border-box; }
+html,body { 
+  height: 100%; 
+  width: 100%; 
+  background: var(--bg);
+}
+...
+```
+
+`frontend-react-js/src/components/JoinSection.css`:
+```
+...
+.join {
+  display: flex;
+  flex-direction: column;
+  background: var(--fg);
+  border-radius: 8px;
+  margin-top: 24px;
+}
+...
+```
+
+Update the search field colours, updates to `frontend-react-js/src/components/Search.css` by adding variables in `frontend-react-js/src/index.css`
+
+`frontend-react-js/src/index.css`
+```
+...
+:root {
+  --bg: rgb(61,13,123);
+  --fg: rgb(8,1,14);
+  --field-border: rgba(149,0,255,0.1);
+  --field-border-focus: rgba(149,0,255,1);
+  --field-bg: rgba(149,0,255,0.1); 
+}
+...
+```
+
+
+`frontend-react-js/src/components/Search.css`
+```
+...
+.search_field input[type='text'] {
+  border: solid 1px var(--field-border);
+  background: var(--field-bg);
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+  color: #fff;
+}
+.search_field input[type='text']:focus {
+  border: solid 1px var(--field-border-focus);
+}
+...
+```
+
+Update Sign-in fields to use variable, in `frontend-react-js/src/pages/SigninPage.css`
+```
+...
+article.signin-article input[type='text'],
+article.signin-article input[type='password'] {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  display: block;
+  outline: none;
+  resize: none;
+  width: 100%;
+  padding: 16px;
+  border: solid 1px var(--field-border);
+  background: #1f1f1f;
+  color: #fff;
+}
+...
+article.signin-article input[type='text']:focus ,
+article.signin-article input[type='password']:focus {
+  border: solid 1px var(--field-border-focus);
+}
+...
+```
+
+Screenshot evidences:
+![image](https://user-images.githubusercontent.com/22940535/236853570-3ebff78e-5732-4266-ba1f-c261198caa43.png)
+![image](https://user-images.githubusercontent.com/22940535/236853660-7a7d3864-d059-4b2a-85a5-3f0db375d351.png)
 
 
 
