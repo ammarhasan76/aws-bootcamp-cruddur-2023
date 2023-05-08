@@ -538,7 +538,23 @@ try {
 ...
 ```
 
-
+5. Bugfix in `backend-flask/services/home_activities.py` - was getting a rendering issue in the site because the code for inserting additional record into the  result record set was not inline with the if statement, and therefore was still getting called even when no logged-in user
+```
+...
+    if cognito_user_id != None:
+      extra_crud = {
+              'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+      'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+      'handle':  'Garek',
+      'message': 'Extra Crud!!!!',
+      'created_at': (now - timedelta(hours=1)).isoformat(),
+      'expires_at': (now + timedelta(hours=12)).isoformat(),
+      'likes': 0,
+      'replies': []
+      }
+      results.insert(0,extra_crud)
+...
+```
 
 
 
