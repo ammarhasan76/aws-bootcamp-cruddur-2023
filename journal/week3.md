@@ -330,7 +330,7 @@ Success :joy:
 
 ## Cognito JWT Server-side Verify
 
-# First task in this section is to get the JWT from client-side to the backend, we do this by sending it in the header when calling HomeFeedPage
+### First task in this section is to get the JWT from client-side to the backend, we do this by sending it in the header when calling HomeFeedPage
 
 1. In `HomeFeedPage.js` added the following to the `loadData` function in order to pickup the JWT:  
 ```
@@ -381,7 +381,7 @@ Success :joy:
 
 ![Screenshot 2023-05-05 120706](https://user-images.githubusercontent.com/22940535/236444281-abbe9d9b-a774-4f3b-9088-9b9f2e67f74f.png)
 
-# The next task in this section is to verify the token received is valid.
+### The next task in this section is to verify the token received is valid.
 
 1. Added Flask-AWSCognito open-source/community libary to the backend Flask module requirements in:  
 `..\backend-flask\requirements.txt`  
@@ -455,7 +455,7 @@ access_token = extract_access_token(request.headers)
                 abort(make_response(jsonify(message=str(e)), 401))
 ```
 
-# Completing the JWT verify including sign-out, with debugging code. Show's addition results when logged in.
+### Completing the JWT verify including sign-out, with debugging code. Show's addition results when logged in.
 
 1. In `backend-flask/app.py` fixed Attribute reference error on calling `extract_access_token` by 
 ```
@@ -556,7 +556,7 @@ try {
 ...
 ```
 
-# Screenshot evidences of successful JWT Server-side Verify functionality:
+### Screenshot evidences of successful JWT Server-side Verify functionality:
 
 1. Additional record  displayed:
 ![image](https://user-images.githubusercontent.com/22940535/236849090-ef1c08ea-ee44-47f2-a485-10f4ca3049bb.png)
