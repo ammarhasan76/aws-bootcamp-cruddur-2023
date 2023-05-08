@@ -413,7 +413,7 @@ services:
 ...
 ```
 
-4. Due to issues with not having a Cognito Client Secret, we needed to work around the FLask-AWSCognito library, specifically the `token_service.py` part of the module:  
+4. Due to issues with not having a Cognito Client Secret, we needed to work around the Flask-AWSCognito library, specifically the `token_service.py` part of the module:  
 
 - Created `.\backend-flask\lib\cognito_token.verification.py`
 - Copied in `https://github.com/cgauge/Flask-AWSCognito/blob/master/flask_awscognito/services/token_service.py`
@@ -455,15 +455,88 @@ access_token = extract_access_token(request.headers)
                 abort(make_response(jsonify(message=str(e)), 401))
 ```
 
+# Completing the JWT verify including sign-out, with debugging code. Show's addition results when logged in.
+
+1. In `backend-flask/app.py` fixed Attribute reference error on calling `extract_access_token` by 
+```
+...
+from lib.cognito_jwt_token import CognitoJwtToken, TokenVerifyError, extract_access_token
+...
+access_token = extract_access_token(request.headers)
+...
+```
+
+2. Added multiple debug statements in order to check status of various variables and to help with troubleshooting, and added another parameter (username) to the call to HomeActivities 
+```
+...
+  app.logger.debug('--------------- DEBUGGING ---------------')
+  app.logger.debug(request.headers)
+  app.logger.debug(os.getenv("AWS_COGNITO_USER_POOL_ID"))
+  app.logger.debug(os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"))
+  app.logger.debug(os.getenv("AWS_DEFAULT_REGION"))
+  app.logger.debug('--------------- CognitoJwtToken ---------------')
+  app.logger.debug(cognito_jwt_token)
+
+  access_token = extract_access_token(request.headers)
+  try:
+      claims = cognito_jwt_token.verify(access_token)
+      # authenticated
+      app.logger.debug('--------------- Authenticated ---------------')
+      app.logger.debug('access_token')
+      app.logger.debug(access_token)
+      app.logger.debug('claims')
+      app.logger.debug(claims)
+      app.logger.debug('username')
+      app.logger.debug(claims['username'])
+      data = HomeActivities.run(logger=LOGGER,cognito_user_id=claims['username'])
+  except TokenVerifyError as e:
+      # unauthenticated
+      app.logger.debug('--------------- Unauthenticated or Authentication Faied ---------------')
+      app.logger.debug(e)
+      data = HomeActivities.run(logger=LOGGER)
+...
+```
+
+3. Updated `backend-flask/services/home_activities.py` to accept additional parameter, added debugging/logging statement to confirm parameter received, added additional record to `results` and used if statement to only insert & show it if parameter has a username (ie logged in user)
+```
+...
+class HomeActivities:
+  def run(logger):
+  def run(logger,cognito_user_id=None):
+    logger.info('Hello Cloudwatch! from home_activities /api/activities/home')
+    logger.info(cognito_user_id)
+...
+```
+
+```
+...
+    if cognito_user_id != None:
+      extra_crud = {
+              'uuid': '248959df-3079-4947-b847-9e0892d1bab4',
+      'handle':  'Garek',
+      'message': 'Extra Crud!!!!',
+      'created_at': (now - timedelta(hours=1)).isoformat(),
+      'expires_at': (now + timedelta(hours=12)).isoformat(),
+      'likes': 0,
+      'replies': []
+      }
+    results.insert(0,extra_crud)
+...
+```
 
 
-
-
-
-
-
-
-
+4. Updated `frontend-react-js/src/components/ProfileInfo.js` so that the JWT access token is removed from local storage so that Sign-out is correctly processed
+```
+...
+try {
+        await Auth.signOut({ global: true });
+        window.location.href = "/"
+        localStorage.removeItem("access_token") // Added this as part of the sign-out
+    } catch (error) {
+        console.log('error signing out: ', error);
+    }
+...
+```
 
 
 
