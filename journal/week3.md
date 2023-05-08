@@ -567,7 +567,65 @@ try {
 3. Debugging outout showing header with populated Bearer token, picking up env vars, token is present, confirmation that the code for authenticated user was run
 ![image](https://user-images.githubusercontent.com/22940535/236851408-4f48ec59-3929-49ac-b98e-158574a5d6ec.png)
 
-😂
+
+Success! 😂
+
+### Watched Exploring JWTs
+https://www.youtube.com/watch?v=nJjbI4BbasU&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=43
+
+Notes:
+
+Example of easking ChatGPT for `python code that will verify access token from cognito and return claims`
+```
+...
+import boto3
+from botocore.exceptions import ClientError
+
+def verify_token(access_token):
+    """
+    Verifies the provided access token with Cognito and returns its claims.
+    """
+    client = boto3.client('cognito-idp')
+    try:
+        response = client.get_user(
+            AccessToken=access_token
+        )
+        return response['UserAttributes']
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+        return None
+...
+```
+
+```
+To use this function, you need to provide the access token as an argument to the verify_token function. The function then uses the get_user API of the Cognito Identity Provider (IDP) to verify the token and return the user's attributes (claims).
+
+Note that the get_user API requires the access_token parameter to be a valid, non-expired JWT access token that was issued by the same user pool that the client app is configured to use. If the token is invalid or expired, or if there is any other error during the verification process, the function will return None and print an error message.
+```
+
+Various webpages with more research and reading material reviewed in the video:  
+https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/index.html
+
+https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/get-user.html
+
+https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-verifying-a-jwt.html
+
+https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-the-id-token.html
+
+https://datatracker.ietf.org/doc/html/rfc7519
+
+https://github.com/awslabs/aws-jwt-verify
+
+https://github.com/awslabs/aws-support-tools/blob/master/Cognito/decode-verify-jwt/decode-verify-jwt.py
+
+https://pypi.org/project/cognitojwt/
+
+A middleware/side-car solution would decouple JWT verification from the main app, by performing the verification, decoding the claims and then passing the claims through to the main applicati on.
+
+Another way to solve this is to use API-G and use custom authorisers:  
+https://aws.amazon.com/blogs/security/how-to-secure-api-gateway-http-endpoints-with-jwt-authorizer/
+
+
 
 
 
