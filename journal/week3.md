@@ -556,5 +556,18 @@ try {
 ...
 ```
 
+# Screenshot evidences of successful JWT Server-side Verify functionality:
+
+1. Additional record  displayed:
+![image](https://user-images.githubusercontent.com/22940535/236849090-ef1c08ea-ee44-47f2-a485-10f4ca3049bb.png)
+
+2. Debugging outout showing header with no Bearer token, picking up env vars, no token present, confirmation that the code for unauthenticated user was run
+![image](https://user-images.githubusercontent.com/22940535/236850202-fa4f5e5d-78ff-4129-bd55-8bc6d970fb23.png)
+
+3. Debugging outout showing header with populated Bearer token, picking up env vars, token is present, confirmation that the code for authenticated user was run
+![image](https://user-images.githubusercontent.com/22940535/236851408-4f48ec59-3929-49ac-b98e-158574a5d6ec.png)
+
+😂
+
 
 
