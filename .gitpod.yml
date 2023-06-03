@@ -2,9 +2,6 @@ tasks:
   - name: aws-cli
     env:
       AWS_CLI_AUTO_PROMPT: on
-    before: |
-      sudo ./aws/install
-      echo "AWS CLI activated"
     init: |
       cd /workspace
       echo "Changed Working Directory to Workspace"
